@@ -4,7 +4,7 @@ Tools for generating forms based on Schematics Models
 import datetime
 from operator import itemgetter
 from schematics.models import Model
-from schematics.serialize import wholelist, whitelist, blacklist
+from schematics.transforms import wholelist, whitelist, blacklist
 from wtforms import fields as f, validators, Form, ValidationError
 from wtforms.widgets import HiddenInput, TextInput
 
@@ -307,9 +307,9 @@ def model_fields(model, only=None, exclude=None, hidden=None, field_args=None, c
        ishidden = False
        if hidden:
           if field_name in hidden: ishidden=True
-          
+
        form_field = converter.convert(model, field, field_name, field_args.get(field_name), hidden=ishidden)
-          
+
        if form_field is not None:
           field_dict[field_name] = form_field
 
