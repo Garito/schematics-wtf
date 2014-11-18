@@ -6,6 +6,7 @@ from operator import itemgetter
 from schematics.models import Model
 from schematics.transforms import wholelist, whitelist, blacklist
 from wtforms import fields as f, validators, Form, ValidationError
+from wtforms.fields import html5 as html5f
 from wtforms.widgets import HiddenInput, TextInput
 
 def converts(*args):
@@ -118,8 +119,10 @@ class ModelConverter(object):
         if 'textarea' in kwargs:
             if kwargs.pop('textarea'):
                 return f.TextAreaField(**kwargs)
+        if 'file' in kwargs:
+            if kwargs.pop('file'):
+                return f.FileField(**kwargs)
         return f.StringField(**kwargs)
-        #eturn f.TextAreaField(**kwargs)
 
     @converts('URLType')
     def conv_URL(self, model, field, kwargs):
@@ -131,7 +134,7 @@ class ModelConverter(object):
     def conv_Email(self, model, field, kwargs):
         kwargs['validators'].append(validators.Email())
         self._string_common(model, field, kwargs)
-        return f.StringField(**kwargs)
+        return html5f.EmailField(**kwargs)
 
     @converts('IntType')
     def conv_Int(self, model, field, kwargs):
@@ -154,13 +157,15 @@ class ModelConverter(object):
 
     @converts('DateTimeType')
     def conv_DateTime(self, model, field, kwargs):
-        return f.DateTimeField(**kwargs)
+        #return f.DateTimeField(**kwargs)
+        return html5f.DateTimeField(**kwargs)
 
     @converts('DateType')
     def conv_Date(self, model, field, kwargs):
         kwargs['format'] = field.py_format
         kwargs['validators'].append(date_format(field.py_format))
-        return f.DateField(**kwargs)
+        #return f.DateField(**kwargs)
+        return html5f.DateField(**kwargs)
 
     @converts('TimeType')
     def conv_Time(self, model, field, kwargs):
