@@ -139,17 +139,17 @@ class ModelConverter(object):
     @converts('IntType')
     def conv_Int(self, model, field, kwargs):
         self._number_common(model, field, kwargs)
-        return f.IntegerField(**kwargs)
+        return html5f.IntegerField(**kwargs)
 
     @converts('FloatType')
     def conv_Float(self, model, field, kwargs):
         self._number_common(model, field, kwargs)
-        return f.FloatField(**kwargs)
+        return html5f.DecimalField(**kwargs)
 
     @converts('DecimalType')
     def conv_Decimal(self, model, field, kwargs):
         self._number_common(model, field, kwargs)
-        return f.DecimalField(**kwargs)
+        return html5f.DecimalField(**kwargs)
 
     @converts('BooleanType')
     def conv_Boolean(self, model, field, kwargs):
@@ -171,7 +171,7 @@ class ModelConverter(object):
     def conv_Time(self, model, field, kwargs):
         kwargs['format'] = field.format
         kwargs['validators'].append(time_format(field.format))
-        return f.DateTimeField(**kwargs)
+        return html5f.DateTimeField(**kwargs)
 
     @converts('BinaryType')
     def conv_Binary(self, model, field, kwargs):

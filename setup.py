@@ -10,12 +10,14 @@ setup(
     description='Schematics Model to WTForm converter',
     url='http://github.com/Garito/schematics-wtf',
     packages=['schematics_wtf'],
+    author = 'Garito',
+    author_email = 'garito@gmail.com',
     install_requires = [
         'schematics>=1.0-0',
         'wtforms'
     ],
     dependency_links = [
-        'https://github.com/j2labs/schematics/tarball/master#egg=schematics-1.0-0'
+        'https://github.com/schematics/schematics/tarball/master#egg=schematics-1.0-0'
     ],
     classifiers=[
         'Environment :: Other Environment',
