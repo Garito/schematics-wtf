@@ -9,6 +9,7 @@ setup(
     license='BSD',
     description='Schematics Model to WTForm converter',
     url='http://github.com/Garito/schematics-wtf',
+    download_url='https://github.com/Garito/schematics-wtf/tarball/0.1.2-alpha',
     packages=['schematics_wtf'],
     author = 'Garito',
     author_email = 'garito@gmail.com',

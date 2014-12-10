@@ -158,19 +158,21 @@ class ModelConverter(object):
     @converts('DateTimeType')
     def conv_DateTime(self, model, field, kwargs):
         #return f.DateTimeField(**kwargs)
+        if 'js_format' in kwargs:
+            field.js_format = kwargs.pop('js_format')
         return html5f.DateTimeField(**kwargs)
 
     @converts('DateType')
     def conv_Date(self, model, field, kwargs):
-        kwargs['format'] = field.py_format
-        kwargs['validators'].append(date_format(field.py_format))
+        kwargs['format'] = field.formats[0]
+        kwargs['validators'].append(date_format(field.serialized_format))
         #return f.DateField(**kwargs)
         return html5f.DateField(**kwargs)
 
     @converts('TimeType')
     def conv_Time(self, model, field, kwargs):
-        kwargs['format'] = field.format
-        kwargs['validators'].append(time_format(field.format))
+        kwargs['format'] = field.serialized_format
+        kwargs['validators'].append(time_format(field.serialized_format))
         return html5f.DateTimeField(**kwargs)
 
     @converts('BinaryType')
@@ -253,32 +255,35 @@ class BootstrapTimePickerWidget(TextInput):
 
     def __call__(self, field, **kwargs):
         return u""" \
-          <div class="input-append bootstrap-timepicker">
-           <input class="timepicker input-small" type="text" {options}>
-           <span class="add-on"><i class="icon-time"></i></span>
+          <div class="input-group bootstrap-timepicker">
+           <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+           <input class="timepicker form-control" type="text" {options}>
           </div>
         """.format(options=unicode(self.options))
 
 class BootstrapDatePickerWidget(TextInput):
     def __init__(self, js_format):
         self.js_format = js_format
-
+        
     def __call__(self, field, **kwargs):
+        value = kwargs.get('value', field._value())
         return u""" \
-          <div class="input-append date datepicker" data-date-format={format}>
-           <input class="input-small" type="text">
-           <span class="add-on"><i class="icon-calendar"></i></span>
+          <div class="input-group date datepicker" data-date="{date}">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+           <input class="form-control" type="text" data-date-format="{format}">
           </div>
-        """.format(format=self.js_format)
-        kwargs['class'] = 'datepicker'
-        kwargs['data-date-format'] = self.js_format
-        return super(BootstrapDatePickerWidget, self).__call__(field, **kwargs)
+        """.format(format=self.js_format, date=value)
 
 class BootstrapModelConverter(ModelConverter):
+    
+    @converts('DateTimeType')
+    def conv_DateTime(self, model, field, kwargs):
+        field = self.conv_Date(model, field, kwargs)
+        return super(BootstrapModelConverter, self).conv_DateTime(model, field, kwargs)
 
     @converts('DateType')
     def conv_Date(self, model, field, kwargs):
-        kwargs['widget'] = BootstrapDatePickerWidget(field.js_format)
+        kwargs['widget'] = BootstrapDatePickerWidget(kwargs.pop('js_format'))
         return super(BootstrapModelConverter, self).conv_Date(model, field, kwargs)
 
     @converts('TimeType')
