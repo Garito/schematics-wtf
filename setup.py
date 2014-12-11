@@ -5,11 +5,11 @@ from setuptools import setup
 
 setup(
     name='schematics-wtf',
-    version='0.1.4-alpha',
+    version='0.1.5-alpha',
     license='BSD',
     description='Schematics Model to WTForm converter',
     url='http://github.com/Garito/schematics-wtf',
-    download_url='https://github.com/Garito/schematics-wtf/tarball/0.1.4-alpha',
+    download_url='https://github.com/Garito/schematics-wtf/tarball/0.1.5-alpha',
     packages=['schematics_wtf'],
     author = 'Garito',
     author_email = 'garito@gmail.com',

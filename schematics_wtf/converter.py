@@ -274,7 +274,7 @@ class BootstrapDatePickerWidget(TextInput):
         return u""" \
           <div class="input-group date datepicker">
           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-           <input class="form-control" type="text" data-date-format="{format}" name="{name}" data-date="{date}">
+           <input class="form-control" type="text" data-date-format="{format}" name="{name}" id="{name}" data-date="{date}">
           </div>
         """.format(name=field.name, format=self.js_format, date=value)
 
