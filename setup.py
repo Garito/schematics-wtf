@@ -5,11 +5,11 @@ from setuptools import setup
 
 setup(
     name='schematics-wtf',
-    version='0.1.5.1',
+    version='0.1.5.2',
     license='BSD',
     description='Schematics Model to WTForm converter',
     url='http://github.com/Garito/schematics-wtf',
-    download_url='https://github.com/Garito/schematics-wtf/archive/master.zip',
+    download_url='http://pypi.python.org/pypi/dist/schematics-wtf-0.1.5.1.tar.gz',
     packages=['schematics_wtf'],
     author = 'Garito',
     author_email = 'garito@gmail.com',
