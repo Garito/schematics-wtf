@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='schematics-wtf',
-    version='0.1.5',
+    version='0.1.5.1',
     license='BSD',
     description='Schematics Model to WTForm converter',
     url='http://github.com/Garito/schematics-wtf',
