@@ -289,7 +289,7 @@ class BootstrapDatePickerWidget(TextInput):
     def __call__(self, field, **kwargs):
         value = kwargs.get('value', field._value())
         
-        if value and self.primitive_format != self.format:
+        if value != '' and value != '00:00:00' and self.primitive_format != self.format:
             value = datetime.datetime.strptime(value, self.primitive_format).strftime(self.format)
         
         if self.ver == 3:
