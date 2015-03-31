@@ -271,14 +271,27 @@ class BootstrapTimePickerWidget(TextInput):
 
 class BootstrapDatePickerWidget(TextInput):
     js_format = 'YYYY-MM-DD'
+    format = 'Y%-M%-D%'
+    primitive_format = "%Y-%m-%dT%H:%M:%S.%f"
     
-    def __init__(self, js_format = None, ver = None):
+    def __init__(self, js_format=None, format=None, primitive_format=None, ver=None):
         if js_format:
             self.js_format = js_format
+            
+        if format:
+            self.format = format
+            
+        if primitive_format:
+            self.primitive_format
+
         self.ver = 3 if ver is None else ver
         
     def __call__(self, field, **kwargs):
         value = kwargs.get('value', field._value())
+        
+        if value and self.primitive_format != self.format:
+            value = datetime.datetime.strptime(value, self.primitive_format).strftime(self.format)
+        
         if self.ver == 3:
             return u""" \
               <div class="input-group date datepicker">
@@ -303,7 +316,10 @@ class BootstrapModelConverter(ModelConverter):
 
     @converts('DateType')
     def conv_Date(self, model, field, kwargs):
-        kwargs['widget'] = BootstrapDatePickerWidget(kwargs.pop('js_format'),kwargs.pop('ver', None))
+        kwargs['widget'] = BootstrapDatePickerWidget(kwargs.pop('js_format', None), 
+                                                     kwargs.get('format', None), 
+                                                     kwargs.get('primitive_format', None),
+                                                     kwargs.pop('ver', None))
         return super(BootstrapModelConverter, self).conv_Date(model, field, kwargs)
 
     @converts('TimeType')
