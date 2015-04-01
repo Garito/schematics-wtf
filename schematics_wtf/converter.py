@@ -160,6 +160,8 @@ class ModelConverter(object):
         #return f.DateTimeField(**kwargs)
         if 'js_format' in kwargs:
             field.js_format = kwargs.pop('js_format')
+        if 'primitive_format' in kwargs:
+            field.primitive_format = kwargs.pop('primitive_format')
         return html5f.DateTimeField(**kwargs)
 
     @converts('DateType')
