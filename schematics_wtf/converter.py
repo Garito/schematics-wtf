@@ -158,6 +158,7 @@ class ModelConverter(object):
     @converts('DateTimeType')
     def conv_DateTime(self, model, field, kwargs):
         #return f.DateTimeField(**kwargs)
+        
         if 'js_format' in kwargs:
             field.js_format = kwargs.pop('js_format')
         if 'primitive_format' in kwargs:
@@ -284,7 +285,7 @@ class BootstrapDatePickerWidget(TextInput):
             self.format = format
             
         if primitive_format:
-            self.primitive_format
+            self.primitive_format = primitive_format
 
         self.ver = 3 if ver is None else ver
         
